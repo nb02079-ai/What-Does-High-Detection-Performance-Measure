@@ -100,7 +100,12 @@
 | 데이터셋 | 인용 | 상태 |
 |---|---|---|
 | **DMBD 2025** | Lawrence Livermore National Laboratory. "Dynamic Malware Behaviorial Dataset." July 2025. LLNL-CODE-837816. (Wintap 기반, gdo-wintap.llnl.gov) | ✅ README 원문 확인 |
-| **CIC-MalMem-2022** | Carrier et al. (2022). 원 논문 제목·학회 **최종 확인 필요** (ICISSP 2022, "Detecting Obfuscated Malware using Memory Feature Engineering"로 기억하나 미검증) | ⚠️ 제목·학회 재확인 |
+| **CIC-MalMem-2022** | Carrier, T., Victor, P., Tekeoglu, A., & Lashkari, A. H. (2022). Detecting Obfuscated Malware using Memory Feature Engineering. In *Proceedings of the 8th International Conference on Information Systems Security and Privacy (ICISSP 2022)*, Vol. 1, pp. 177–188. SciTePress. doi:10.5220/0010908200003120 | ✅ **확인 (2026-09-29)** — SciTePress·dblp·UNB 데이터셋 페이지 일치. 원 논문 보고치: 정확도 99.00%, F1 99.02% |
+
+### ⚠️ Carrier et al. 확인 중 발견 — 데이터셋 README의 수집 환경 서술
+- UNB/데이터셋 README: *"정상 샘플은 악성코드를 실행한 것과 **같은 Windows 10 VM**에서 다양한 애플리케이션으로 '정상 사용자 행위'를 만들어 생성"*
+- 4.1 v2와 서론 ¶2 초안은 "**두** 가상 머신의 기본 상태 차이"로 서술 → **README와 충돌**
+- 또한 README는 악성 샘플 **2,916개**, 본 연구가 파일명에서 복원한 실행 수는 **2,906개**(10개 차이)
 
 ---
 
@@ -108,6 +113,8 @@
 
 | 항목 | 사유 |
 |---|---|
+| **랜섬웨어의 서비스 중지 행위** (백업·보안 서비스 중지) | 4.1 v3에 `[인용 확인 필요]`. 일반적으로 알려진 사실이나 학술 출처 필요 |
+| **Holzmann & Klar** (MCC도 클래스 불균형에 완전히 강건하지 않다는 반론) | 3.6.1에 `[인용 확인 필요]`로 표시. 프로토콜 §8이 반론 언급을 요구 |
 | Carrier et al. (2022) 정확한 서지 | 제목·학회명 원문 미확인 |
 | Dener et al. (2022) 정확한 서지 | 2차 인용으로만 확인 |
 | 업계 수치 (CrowdStrike 1~3% CPU 등, §7.1) | 벤더 자료이므로 인용 방식 결정 필요 |
