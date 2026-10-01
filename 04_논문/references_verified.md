@@ -55,6 +55,25 @@
 - **쓰지 않는 이유**: "최대 146개"는 Conti가 **표적으로 삼는 서비스 목록**의 크기다. 분석용 VM에 그 서비스들(SQL Server, 백업 제품 등)이 **설치되어 있지 않으면** 실제로 멈출 서비스가 거의 없다. 따라서 Conti 덤프가 389개라는 사실은 행위 부재의 증거가 되지 못한다
 - 4.1의 핵심 근거는 여전히 **15개 계열 전체의 균일성**(행동이 전혀 다른 애드웨어·트로이 목마까지 같은 값)
 
+### Caruana et al. (2004) — 원문 전체 대조 (2026-10-01)
+- **실제 주장**: 서로 다른 학습 알고리즘(SVM·신경망·KNN·결정트리·배깅 트리·부스팅 트리 등)과 설정으로 만든 **약 2,000개 모델의 라이브러리**에서 전진 선택으로 앙상블을 구성 → 7개 문제·10개 지표에서 **가장 좋은 단일 모델을 70번 중 64번 앞섬**, 정규화 점수로는 10개 지표 모두에서 다른 앙상블 방법(베이지안 모델 평균, 로지스틱 회귀 스태킹, 단순 평균)과 최고 단일 모델을 앞섬. 결론: **배깅·부스팅으로 학습한 모델을 포함한 모든 모델을 일관되게 앞선다**
+- 개선 폭: 최고 단일 모델 대비 손실 평균 **8.76% 감소** — 저자들 스스로 **"극적이지 않다"**고 씀
+- ⚠️ **"2.5배" 문장의 정확한 뜻**: "배깅이나 부스팅 트리는 **원래 트리 대비** 손실을 20% 줄여 앙상블 선택 이득의 2.5배"라고 쓴 직후, **"그러나 평범하고 분산이 큰 모델(결정트리)을 개선하기는 최고 모델을 개선하기보다 쉽다"**고 단서를 붙임. 즉 **비교 기준이 다른 두 수치**(원래 트리 대비 vs 최고 모델 대비)를 놓고 과장을 경계한 문장이지, "앙상블 이득이 배깅·부스팅보다 작다"는 결론이 아님
+- 로지스틱 회귀 스태킹은 **매우 나빴음**(평균 정규화 점수 0.406) — 원인: 2,000개의 강하게 상관된 입력 모델과 1천 개뿐인 검증 데이터에서 회귀가 극적으로 과적합. **본 연구(기반 모델 4개, 표본 외 예측 24,000개)와는 조건이 매우 달라 그대로 적용하지 않음**
+- 이득의 원천으로 **"다양한 학습 방법과 설정에서 나오는 다양성"**을 제시. 서론에서 Dietterich(2000)의 "정확하고 다양한 분류기" 조건을 인용(Dietterich 원문은 미확인)
+- **올바른 인용 방식**: "다양한 모델로 구성한 앙상블도 최고 단일 모델 대비 개선 폭은 크지 않았고, 저자들은 이미 좋은 모델을 더 개선하기가 평범한 모델을 개선하기보다 어렵다고 지적했다"
+
+### Kuncheva & Whitaker (2003) — 초록 대조 (2026-10-01)
+- **실제 주장**: 분류기 결합에서 다양성이 핵심으로 여겨지나, 다양성 척도 10가지와 앙상블 정확도의 관계를 네 실험으로 살펴본 결과, **일부 특수한 경우를 빼면 실제 패턴 인식 문제에서 다양성 척도가 앙상블 구성에 유용한지 의문**이 든다
+- ⚠️ **4.2.1의 인용은 반대 방향**: "Kuncheva & Whitaker가 지적했듯 **다양성이 낮은 구성에서 결합의 이득을 기대하기는 어렵다**" → 이 논문은 다양성과 성능의 연관이 **불분명**하다는 결과이므로, "다양성이 낮으면 이득이 없다"의 근거가 될 수 없음. 오히려 **그런 단순한 설명을 경계하는 근거**
+- 기존 메모 "다양성-성능 무관"도 과장 — "무관"이 아니라 "특수한 경우 외에는 관계가 분명하지 않음"
+- **올바른 인용 방식**: "다양성과 앙상블 성능의 관계는 단순하지 않다는 지적도 있다"
+
+### 스태킹 기반 모델의 예측 상관 — 본 연구 측정 (2026-10-01)
+- 4.2.1과 Phase 3 보고서의 "예측이 서로 강하게 상관"은 **측정 없이 쓴 주장**이었음 → 재현 측정 (run_models.py와 같은 구성, 시드 42, 검증 분할)
+- 예측 확률 피어슨 상관: **RF끼리 평균 0.996**, RF와 히스토그램 GB 평균 0.975
+- 판정(임계값 0.5) 불일치율: RF끼리 평균 **1.3%**, RF와 히스토그램 GB 평균 3.3%
+
 ### Shafin et al. (2023) — 원문 대조 (2026-10-01)
 - **서지**: Shafin, S. S., Karmakar, G., & Mareels, I. (2023). Obfuscated memory malware detection in resource-constrained IoT devices for smart city applications. *Sensors*, 23(11), 5348. doi:10.3390/s23115348 (페더레이션대, 호주)
 - **⚠️ 논문 안의 수치 불일치**: 이진 분류 정확도가 **결과 절(4.3)에서는 RobustCBL 99.96%·CompactCBL 99.92%**, **요약 절(4.7)에서는 RobustCBL 99.98%**
@@ -92,6 +111,19 @@
   - 기저율 오류: 소수 클래스 비율이 부풀려지면 정밀도·재현율이 오도할 수 있어 **MCC가 더 적합**
   - 부적절한 위협 모델: **멤버십 추론**, 적대적 예제 등 / 실험실 평가: **실행 시간·저장 공간 제약**을 실제 조건에서 분석
 
+### Hasan & Dhakal (2024) — 원문 전체 대조 (2026-10-01)
+- **서지**: Hasan, S. M. R., & Dhakal, A. (2024). Obfuscated malware detection: Investigating real-world scenarios through memory analysis. *arXiv preprint* arXiv:2404.02372. (BRAC대, 방글라데시) — arXiv 표기: **IEEE ICTP 2023(제5회 통신·광자공학 국제학회, 다카)에서 발표**
+- CIC-MalMem-2022 **이진 분류** 정확도: 랜덤 포레스트 **0.9999**, MLP 0.9999, XGBoost 0.9999, KNN 0.9991. "모든 악성코드를 정확히 탐지"
+- 원고의 "랜덤 포레스트, 99.99%" ✅ — 저자들이 대표로 제시한 모델(그림 2). 단 MLP·XGBoost도 같은 값
+- 분할: 학습 데이터 = 전체의 **80%**(46,876개). **무작위 분할인지는 명시하지 않음** → 원고 2.2.3의 "분할 방식을 확인한 연구"에 포함하지 않은 판단 유지
+- 다중 분류는 ADASYN 과표집으로 최고 94.27%(XGBoost)
+
+### Nassar (2026) — 초록·본문 첫머리 대조 (2026-10-01)
+- **서지**: Nassar, S. (2026). Malware detection through memory analysis. *arXiv preprint* arXiv:2602.02184. (퀸스대, 캐나다)
+- CIC-MalMem-2022 이진 분류: **XGBoost, 정확도·F1 99.98%** ✅ (원고의 "부스팅, 99.98%"와 일치). 다중 분류(4클래스) 87.54%
+- ⚠️ **출처의 성격**: 초록 끝 — **"2024년 겨울 학기 ELEC 877(사이버보안을 위한 AI) 수업의 일부로 수행"**. 단독 저자의 **수업 과제 보고서**, 동료 심사 없음
+- 원고 영향: 범위 서술의 근거 중 하나로 인용 중이었음 → ✅ **사용자 결정 (2026-10-01): 원고에서 제외** (반영 대기 #17). 범위는 Dener(99.97)·Shafin(99.92/99.96)·Hasan & Dhakal(99.99)로 뒷받침
+
 ### Holzmann & Klar (2024) — 원문 대조 결과 (2026-09-30)
 - **서지**: Holzmann, H., & Klar, B. (2024). Robust performance metrics for imbalanced classification problems. *arXiv preprint* arXiv:2404.07661. doi:10.48550/arXiv.2404.07661 (마르부르크대·카를스루에 공대)
 - **게재 상태**: ✅ **사전 공개본** — 학술지 게재 표기 없음. 저자들의 R 패키지(RobustMetrics, CRAN)는 2025년 판에서 "(2024)", 2026년 판에서 "(2026)"으로 인용하나 두 경우 모두 arXiv DOI만 제시 → **개정판이 있을 수 있으므로 인용 시 참조한 버전을 표기**
@@ -103,6 +135,16 @@
   - 판정(H3·H5)은 모두 **클래스가 절반씩인 분할**에서 이루어짐 → 이 문제의 영향이 작음
   - 해당되는 곳은 **공식 시험 분할**(악성 78.8%, 정상 21.2%)의 통합 MCC 정도이며, 이마저 극단적 불균형은 아님. 4.4는 코호트별 탐지율·오탐률을 중심으로 해석함
 - **3.6.1 서술 방향**: 반론을 소개하되 **왜 본 연구에는 영향이 작은지**를 함께 밝힌다
+
+### Carrier et al. (2022) — 원 논문 본문 전체 대조 (2026-10-01, SciTePress 원문)
+- ✅ **스태킹 앙상블 확인**: 2층 스태킹. 기반 모델 나이브 베이즈·랜덤 포레스트·결정트리, 메타 모델 로지스틱 회귀 → 정확도 0.99 (표 4). 개별 분류기 정확도: RF 0.97, DT 0.97, KNN 0.95, NB 0.92, SVM 0.90, 선형 퍼셉트론 0.60 (표 3). → 원고에서 "2차 정보"라 뺐던 내용이 **원문으로 확인됨**
+- ✅ VolMemLyzer를 확장한 **VolMemLyzer-V2**에 새 특징 26개 추가 (Malfind·Ldrmodule·Handles·Process View·Apihooks의 5범주)
+- ✅ 데이터셋 생성: VirusTotal의 악성 샘플 **2,916개**(15개 계열, 표 2)를 메모리 2GB인 Windows 10 VM(VirtualBox)에서 실행. **실행마다 15초 간격으로 덤프 10개**. 덤프는 VM **바깥**에서 캡처(덤프 과정이 메모리를 오염시키지 않도록)
+- ✅ 저자들은 **악성 덤프를 만들 때도 VM에서 여러 애플리케이션을 함께 열었다** — "분류기가 정상 프로세스만으로 차이를 판별하지 못하게 하려고"
+- ⚠️ **정상 덤프는 SMOTE로 과표집**: "정상 덤프는 기계에서 여러 애플리케이션을 쓰는 일상 행위를 캡처했고, 데이터셋 균형을 위해 **SMOTE로 과표집**했다." 실제 정상 덤프의 수는 밝히지 않음
+  - **본 연구의 데이터 확인 (2026-10-01)**: 개수형 특징(41개)에 소수점 값이 있는 행 — 정상 0.6%, 악성 0.4%로 비슷. 정상의 서비스 수는 전부 정수. 정상 파일명은 전부 "Benign"이라 실제·합성 구별 불가 → **보간의 흔적이 뚜렷하지 않아 합성 샘플의 비율은 확인 불가**(반올림 가능성 등)
+  - **원고 영향 (사용자 결정 대기)**: ① 4.1에 수집 절차의 사실로 언급할지 ② 정상 샘플을 묶을 단위가 없어 표 1의 그룹 교차검증은 악성만 묶었는데, 정상에 합성 샘플이 섞여 있다면 원본과 합성본이 학습·평가에 나뉠 수 있음 → 6장 한계 후보
+- ⚠️ 논문 안의 불일치: ① 특징 수 — 본문은 "58개 추출", 공개 데이터는 55개 ② 판정 시간 — 본문은 "샘플당 약 0.008ms", 표 5는 50개 0.4초(샘플당 약 8ms) ③ 분할 방식은 **서술 없음**
 
 ### Dener et al. (2022) — 원문 대조 결과
 - **서지**: Dener, M., Ok, G., & Orman, A. (2022). Malware Detection Using Memory Analysis Data in Big Data Environment. *Applied Sciences*, 12(17), 8604. doi:10.3390/app12178604 (가지대·앙카라 이을드름 베야즛대, Editor's Choice)
@@ -123,15 +165,15 @@
 | 출처 | 용도 | 상태 |
 |---|---|---|
 | Arp, Quiring, Pendlebury, Warnecke, Pierazzi, Wressnegger, Cavallaro, Rieck. "Dos and Don'ts of Machine Learning in Computer Security." **USENIX Security 2022** | 서론 차별화, 2장 핵심 | ✅ (이전 조사에서 확인) |
-| Pendlebury et al. "TESSERACT: Eliminating Experimental Bias in Malware Classification across Space and Time." **USENIX Security 2019** | 시간·공간 편향 | ✅ |
-| Shokri et al. "Membership Inference Attacks against Machine Learning Models." **IEEE S&P 2017** | MIA 원전 | ✅ |
-| Carlini et al. "Membership Inference Attacks From First Principles." **IEEE S&P 2022** | TPR@low-FPR 평가 원칙 | ✅ |
-| Pierazzi et al. "Intriguing Properties of Adversarial ML Attacks in the Problem Space." **IEEE S&P 2020** | 교란 민감도 vs 실제 회피 | ✅ |
-| Chicco & Jurman. "The advantages of the MCC over F1 score and accuracy in binary classification evaluation." **BMC Genomics 2020** | 주지표 MCC 근거 | ✅ |
+| Pendlebury, Pierazzi, Jordaney, Kinder, Cavallaro. "TESSERACT: Eliminating Experimental Bias in Malware Classification across Space and Time." **28th USENIX Security Symposium, 2019**, pp. 729–746 (arXiv:1807.07838 v4 = 게재판) | 2.5, **4.4(추가 필요)**, 6장 | ✅ **초록 확인 (2026-10-01)** — 결과는 흔히 두 편향으로 부풀려짐: **공간 편향**(학습·시험 분포가 실제 배치 환경을 대표하지 못함), **시간 편향**(시간 분할을 잘못해 현실에서 불가능한 구성). 안드로이드 악성코드 대상. 2024 확장판(Kan et al., arXiv:2402.01359)은 별도 |
+| Shokri, Stronati, Song, Shmatikov. "Membership Inference Attacks against Machine Learning Models." **IEEE S&P 2017**, pp. 3–18. doi:10.1109/SP.2017.41 | 3.6.2, 2.3 | ✅ **초록·저자 PDF 확인 (2026-10-01)** — shadow 학습 기법 제안. 공격 모델을 **출력 클래스마다** 두고 대상 모델의 **예측 벡터**를 입력으로 씀(본 연구보다 복잡) |
+| Carlini, Chien, Nasr, Song, Terzis, Tramèr. "Membership Inference Attacks From First Principles." **IEEE S&P 2022**, pp. 1897–1914 (arXiv:2112.03570) | 3.6.2, 4.2.2, 2.3 | ✅ **초록 확인 (2026-10-01)** — 평균적 지표는 구성원을 확신 있게 식별하는지 보여주지 못함 → **낮은(예: 0.1% 이하) 오탐률의 참양성률**로 평가해야. 이렇게 보면 **기존 공격 대부분이 약함**, 제안 공격(LiRA)은 낮은 오탐률에서 **10배 강함**. ⚠️ 4.2.2가 이 교훈을 거꾸로 적용(#14) |
+| Pierazzi, Pendlebury, Cortellazzi, Cavallaro. "Intriguing Properties of Adversarial ML Attacks in the Problem Space." **IEEE S&P 2020** (arXiv:1911.02142) | 3.6.3, 2.3 | ✅ **초록 확인 (2026-10-01)** — 문제 공간 공격 = 특징 공간에서 실제 객체로의 역사상이 분명하지 않은 영역(예: 소프트웨어)에서 실제 회피 객체 생성. 제약: 가능한 변환·의미 보존·전처리 강건성·그럴듯함. **부수 효과 특징** 개념. (2024 확장판은 저자에 Arp·Quiring 추가 — 인용은 S&P 2020판) |
+| Chicco & Jurman. "The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation." *BMC Genomics* 21(1):6, **2020**. doi:10.1186/s12864-019-6413-7 | 3.6.1, 2.5 | ✅ **초록 확인 (2026-10-01, PubMed)** — 정확도·F1은 특히 불균형 데이터에서 위험할 정도로 낙관적인 결과를 낼 수 있음. MCC는 혼동 행렬 네 범주 모두에서 좋아야 높은 점수. 3.6.1 서술과 일치 |
 | Barr-Smith et al. "Survivalism: Systematic Analysis of Windows Malware Living-Off-The-Land." **IEEE S&P 2021** | 특징 설계 근거 | ✅ |
-| Caruana et al. "Ensemble Selection from Libraries of Models." **ICML 2004** | 스태킹 이득 한계 | ✅ |
-| Kuncheva & Whitaker. "Measures of Diversity in Classifier Ensembles." **Machine Learning 2003** | 다양성-성능 무관 | ✅ |
-| Frazier. "A Tutorial on Bayesian Optimization." arXiv:1807.02811 (2018) | GP-EI 근거 | ✅ |
+| Caruana, Niculescu-Mizil, Crew, Ksikes. "Ensemble Selection from Libraries of Models." **ICML 2004** (doi:10.1145/1015330.1015432; 저자들의 수정판 PDF 기준) | 2.4, 4.2.1 | ✅ **원문 전체 확인 (2026-10-01)** — ⚠️ 기존 용도 메모 "스태킹 이득 한계"는 **왜곡**. 아래 상세 |
+| Kuncheva & Whitaker. "Measures of Diversity in Classifier Ensembles and Their Relationship with the Ensemble Accuracy." *Machine Learning* 51(2):181–207, **2003** (doi:10.1023/A:1022859003006) | 2.4, 4.2.1 | ✅ **초록 확인 (2026-10-01, Springer)** — ⚠️ 4.2.1에서 **반대 방향으로 인용**됨. 아래 상세 |
+| Frazier, P. I. "A Tutorial on Bayesian Optimization." *arXiv preprint* arXiv:1807.02811 (2018) | 3.5 | ✅ **원문 확인 (2026-10-01)** — GP 회귀와 획득 함수 세 가지(기대 개선량·엔트로피 탐색·지식 기울기). 기대 개선량은 "성능이 좋고 쓰기 쉽다". 3.5 서술과 일치. **사전 공개본으로 표기** |
 | Domingos. "A Unified Bias-Variance Decomposition for Zero-One and Squared Loss." AAAI 2000 | 이진분류 분산 해석 | ✅ |
 
 ---
