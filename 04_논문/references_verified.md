@@ -86,7 +86,9 @@
 - 관련 연구 절의 2차 정보(인용하려면 원문 확인 필요): Carrier et al.의 기본 RF 98%→스태킹 99.02%, Talukder et al.(2023)이 RF·MLP로 "거의 100%", Mezina & Burget(2022) 이진 99.92%
 
 ### Madamidola et al. (2024) — 원문 전체 대조 (2026-10-01)
-- **서지**: Madamidola, O. A., Ngobigha, F., & Ez-zizi, A. (2024). Detecting new obfuscated malware variants: A lightweight and interpretable machine learning approach. *arXiv preprint* arXiv:2407.07918 (v2). doi:10.48550/arXiv.2407.07918 (서퍽대). 기존 기록의 "ScienceDirect" 게재본은 이번에 확인하지 못함 → **arXiv로 인용**
+- **서지**: Madamidola, O. A., Ngobigha, F., & Ez-zizi, A. (2024). Detecting new obfuscated malware variants: A lightweight and interpretable machine learning approach. ***Intelligent Systems with Applications*** (Elsevier, ISSN 2667-3053). arXiv:2407.07918 (v2). (서퍽대)
+  - ✅ **2026-10-01 정정**: arXiv v2 표기("Now published in Intelligent Systems with Applications")와 서퍽대 저장소로 **학술지 게재 확인** → 참고문헌은 **학술지판으로 인용**. 권·논문 번호는 참고문헌 작성 시 확인. 원고의 `Madamidola et al., 2024` 표기는 그대로
+  - 원문 추가 확인(본문 전체): 1단계 기준선은 **7개 분류기 모두 99.2% 이상**(RF 1.0000, KNN 0.9998, DT 0.9997, GB 0.9996, SVC 0.9970, LR 0.9958, 가우시안 NB 0.9922), 80/20 **계열별 층화** 무작위 분할. 2단계 Transponder 모델의 학습 샘플은 3,856개(전체의 6.58%). 하이퍼파라미터 **튜닝 없음**(기본값). 오류율 서술이 계산과 다름 — 거짓 음성 8/27,370을 "0.01%"(실제 0.029%), 거짓 양성 81/27,370을 "0.15%"(실제 0.296%)로 씀. 행위 해석의 근거는 Alani et al.(2023)과 **보안 업체 블로그**(Brennan 2021, Huntress)
 - ✅ **상위 5개 특징만 사용**(RF 특징 중요도 기준, Alani et al. 2023의 방식을 따름), **정확도 99.8% 초과**(Transponder로만 학습한 모델 99.84%), **파일당 5.7µs**, 모델 크기 340KB
 - ✅ **한 계열로만 학습해 나머지 14개 계열을 탐지**: Transponder로 학습한 모델이 보지 못한 14개 계열을 99.84%로 탐지. 15개 계열별 모델 중 11개가 99% 초과
 - ✅ **`svcscan.nservices`는 15개 계열 모델 중 10개에서 특징 중요도 1위**
@@ -112,11 +114,23 @@
   - 부적절한 위협 모델: **멤버십 추론**, 적대적 예제 등 / 실험실 평가: **실행 시간·저장 공간 제약**을 실제 조건에서 분석
 
 ### Hasan & Dhakal (2024) — 원문 전체 대조 (2026-10-01)
-- **서지**: Hasan, S. M. R., & Dhakal, A. (2024). Obfuscated malware detection: Investigating real-world scenarios through memory analysis. *arXiv preprint* arXiv:2404.02372. (BRAC대, 방글라데시) — arXiv 표기: **IEEE ICTP 2023(제5회 통신·광자공학 국제학회, 다카)에서 발표**
+- **서지**: Hasan, S. M. R., & Dhakal, A. (2023). Obfuscated malware detection: Investigating real-world scenarios through memory analysis. In *2023 IEEE International Conference on Telecommunications and Photonics (ICTP)*, Dhaka, Bangladesh, pp. 1–5. doi:10.1109/ICTP60248.2023.10490701. (arXiv:2404.02372, BRAC대)
+  - ⚠️ **연도 주의**: 학회 게재는 **2023**, arXiv 공개는 2024. 원고는 `Hasan & Dhakal, 2024`로 등록(#17) → **참고문헌을 학회판으로 쓰면 2023으로 맞춰야 함** (반영 대기 #17 수정 필요)
+  - 원문 추가 확인: 다중 분류에서 **"어떤 악성코드도 정상으로 분류되지 않았고, 다른 악성코드 계열로 잘못 분류되었을 뿐"** — 정상·악성 경계는 완벽하고 계열끼리 혼동
 - CIC-MalMem-2022 **이진 분류** 정확도: 랜덤 포레스트 **0.9999**, MLP 0.9999, XGBoost 0.9999, KNN 0.9991. "모든 악성코드를 정확히 탐지"
 - 원고의 "랜덤 포레스트, 99.99%" ✅ — 저자들이 대표로 제시한 모델(그림 2). 단 MLP·XGBoost도 같은 값
 - 분할: 학습 데이터 = 전체의 **80%**(46,876개). **무작위 분할인지는 명시하지 않음** → 원고 2.2.3의 "분할 방식을 확인한 연구"에 포함하지 않은 판단 유지
 - 다중 분류는 ADASYN 과표집으로 최고 94.27%(XGBoost)
+
+### Nassar (2026) — 본문 전체 대조 (2026-10-01 갱신)
+- ⭐ **한계 절이 본 연구의 쟁점을 이미 짚었음**: 같은 샘플의 덤프가 최대 10개라 **한 샘플의 덤프가 학습·시험 한쪽에만 들어가도록** 나눠야 누수를 피한다. 현재 형식에선 **악성은 가능하나 정상은 고유 식별자가 없어 불가능** — 본 연구 표 1의 실행 단위 그룹 교차검증의 근거와, 정상을 묶지 못한 한계를 **그대로** 지적
+- 정상 덤프가 "**밝혀지지 않은 수의** 애플리케이션"에서 나왔고 SMOTE로 과표집되었다고 명시(Carrier 원문을 읽은 독립 서술)
+- 방법: 80/20 **다중 클래스 기준 층화** 분할, 최소-최대 정규화는 **학습 분할에서만 적합**(누수 방지 명시), 5겹 층화 교차검증, 9개 모델 비교. 이진 분류는 **9개 모델 모두 99% 초과**(시험 분할에서 RF·GB·LGBM 1.0000)
+- PCA 2차원 시각화에서 **정상과 악성은 뚜렷이 분리**, 악성 세 유형끼리는 잘 분리되지 않음
+- XGBoost 특징 중요도 1위: **`svcscan.nservices`** (이진·다중 모두)
+- ⭐ **58 vs 55 불일치의 원인**: Kaggle CSV에 논문이 설명한 **API 후킹 특징 3개가 없음** → 본 연구 데이터로 확인(apihook 열 0개). Carrier의 새 특징 26개 중 Apihooks가 정확히 3개 → **58 − 3 = 55**
+- 분류 체계 비판: 트로이 목마는 구현 방식, 랜섬웨어·스파이웨어는 목적이라 기준이 섞여 있음
+- ✅ **사용자 결정 (2026-10-01, (가)안)**: 범위 "99.9~99.99%"의 근거에서는 **제외**(#17), **같은 실행 누수와 정상 식별자 부재를 먼저 지적한 문헌**으로 4.1 표 1 각주에 **인용**(#18) — 동료 심사를 거치지 않은 수업 과제 보고서임을 본문에 명시
 
 ### Nassar (2026) — 초록·본문 첫머리 대조 (2026-10-01)
 - **서지**: Nassar, S. (2026). Malware detection through memory analysis. *arXiv preprint* arXiv:2602.02184. (퀸스대, 캐나다)
@@ -144,7 +158,7 @@
 - ⚠️ **정상 덤프는 SMOTE로 과표집**: "정상 덤프는 기계에서 여러 애플리케이션을 쓰는 일상 행위를 캡처했고, 데이터셋 균형을 위해 **SMOTE로 과표집**했다." 실제 정상 덤프의 수는 밝히지 않음
   - **본 연구의 데이터 확인 (2026-10-01)**: 개수형 특징(41개)에 소수점 값이 있는 행 — 정상 0.6%, 악성 0.4%로 비슷. 정상의 서비스 수는 전부 정수. 정상 파일명은 전부 "Benign"이라 실제·합성 구별 불가 → **보간의 흔적이 뚜렷하지 않아 합성 샘플의 비율은 확인 불가**(반올림 가능성 등)
   - **원고 영향 (사용자 결정 대기)**: ① 4.1에 수집 절차의 사실로 언급할지 ② 정상 샘플을 묶을 단위가 없어 표 1의 그룹 교차검증은 악성만 묶었는데, 정상에 합성 샘플이 섞여 있다면 원본과 합성본이 학습·평가에 나뉠 수 있음 → 6장 한계 후보
-- ⚠️ 논문 안의 불일치: ① 특징 수 — 본문은 "58개 추출", 공개 데이터는 55개 ② 판정 시간 — 본문은 "샘플당 약 0.008ms", 표 5는 50개 0.4초(샘플당 약 8ms) ③ 분할 방식은 **서술 없음**
+- ⚠️ 논문 안의 불일치: ① 특징 수 — 본문은 "58개 추출", 공개 데이터는 55개 → ✅ **원인 확인**: 공개 데이터에 **Apihooks 특징 3개가 없음**(58−3=55, Nassar 2026 지적 + 본 연구 데이터 확인) ② 판정 시간 — 본문은 "샘플당 약 0.008ms", 표 5는 50개 0.4초(샘플당 약 8ms) ③ 분할 방식은 **서술 없음**
 
 ### Dener et al. (2022) — 원문 대조 결과
 - **서지**: Dener, M., Ok, G., & Orman, A. (2022). Malware Detection Using Memory Analysis Data in Big Data Environment. *Applied Sciences*, 12(17), 8604. doi:10.3390/app12178604 (가지대·앙카라 이을드름 베야즛대, Editor's Choice)
