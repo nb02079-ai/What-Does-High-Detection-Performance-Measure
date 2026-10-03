@@ -5,7 +5,7 @@ fm.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 plt.rcParams.update({'font.family':'Noto Sans CJK JP','font.size':10.5,'axes.unicode_minus':False})
 D = json.load(open('h1_data.json'))
 M = ['A_RF','B_RF_BO','C_STACK','D_MLP']
-LAB = {'A_RF':'A: RF 기본','B_RF_BO':'B: RF+BO','C_STACK':'C: 스태킹','D_MLP':'D: MLP'}
+LAB = {'A_RF':'A: RF(튜닝 없음)','B_RF_BO':'B: RF+BO','C_STACK':'C: 스태킹','D_MLP':'D: MLP'}
 COL = {'A_RF':'#4C72B0','B_RF_BO':'#DD8452','C_STACK':'#55A868','D_MLP':'#8172B3'}
 
 # ================= 그림 3: H3 포레스트 플롯 =================
@@ -56,7 +56,7 @@ axes[3].text(1.0, -0.2, '점 = p50, 선 = p50~p95 (1,000회 측정)', transform=
 fig.tight_layout(); fig.savefig('fig/fig4_h1_axes.png', dpi=200); plt.close()
 
 # ================= 그림 5: H2 산점도 =================
-pt = json.load(open('/home/claude/phase4/perturb.json'))
+pt = json.load(open('/home/claude/restore/논문작성/03_실험산출물/phase4/results/perturb.json'))
 fig, axes = plt.subplots(1, 4, figsize=(13.5, 3.6))
 for ax, m in zip(axes, M):
     feats = pt[m]['H2']['features']

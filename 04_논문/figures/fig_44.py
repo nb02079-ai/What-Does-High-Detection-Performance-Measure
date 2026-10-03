@@ -3,9 +3,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt, matplotlib.font_manager as fm
 fm.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 plt.rcParams.update({'font.family':'Noto Sans CJK JP','font.size':10.5,'axes.unicode_minus':False})
-R = json.load(open('/home/claude/phase6/official_test_cohort.json'))
+R = json.load(open('/home/claude/restore/논문작성/03_실험산출물/phase6/results/official_test_cohort.json'))
 M = ['A_RF','B_RF_BO','C_STACK','Selective','Batch','D_MLP']
-LAB = {'A_RF':'A: RF 기본','B_RF_BO':'B: RF+BO','C_STACK':'C: 스태킹',
+LAB = {'A_RF':'A: RF(튜닝 없음)','B_RF_BO':'B: RF+BO','C_STACK':'C: 스태킹',
        'Selective':'선택적 개선','Batch':'일괄 개선','D_MLP':'D: MLP'}
 COL = {'A_RF':'#4C72B0','B_RF_BO':'#DD8452','C_STACK':'#55A868',
        'Selective':'#937860','Batch':'#C44E52','D_MLP':'#8172B3'}
@@ -55,7 +55,6 @@ ax.set_yticks(range(len(order))); ax.set_yticklabels([LAB[m] for m in order][::-
 ax.set_xlim(0, 1); ax.set_xlabel('모델이 산출한 평균 악성 확률')
 ax.spines[['top','right','left']].set_visible(False); ax.tick_params(axis='y', length=0)
 ax.legend(frameon=False, loc='upper center', bbox_to_anchor=(0.5, -0.17), ncol=2)
-fig.text(0.5, -0.08, '점의 위치는 판단 경계(보정)를 나타낸다. 두 점 사이 거리는 구분 능력이 아니다 — 구분 능력은 그림 7의 AUC로 본다 '
-         '(평균만으로는 두 분포의 겹침을 알 수 없음).', ha='center', fontsize=8.3, color='#666')
+# (2026-10-02) 그림 안 설명 문구 삭제 — 같은 내용이 캡션에 있음. 그림에 다른 그림 번호를 박지 않음
 fig.tight_layout(); fig.savefig('fig/fig8_prob_dumbbell.png', dpi=200, bbox_inches='tight'); plt.close()
 print('ok')

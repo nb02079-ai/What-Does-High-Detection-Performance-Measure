@@ -30,16 +30,17 @@ for g in order:
             ax.text(cx, hm / 2, f'{hm*100:.0f}%', ha='center', va='center',
                     color='white', fontweight='bold', fontsize=fs)
         ax.text(cx, -0.07, g, ha='center', va='top', fontsize=10.5 if big else 8.5)
-        ax.text(cx, -0.15, f'n={int(w):,}', ha='center', va='top', fontsize=8.5 if big else 7.5, color='#555')
+        ny = -0.15 if big else -0.22                     # 좁은 막대는 n 라벨을 한 줄 내려 엇갈리게(겹침 방지)
+        ax.text(cx, ny, f'n={int(w):,}', ha='center', va='top', fontsize=8.5 if big else 7.5, color='#555')
     x0 += w + gap
 ax.set_xlim(0, x0); ax.set_ylim(0, 1)
 ax.set_xticks([]); ax.set_yticks([0, .25, .5, .75, 1]); ax.set_yticklabels(['0%','25%','50%','75%','100%'])
 ax.set_ylabel('클래스 구성 비율')
 ax.spines[['top','right','bottom']].set_visible(False)
-ax.text(0.5, -0.27, '막대 폭 ∝ 표본 수   (표본이 극히 적은 ≤2016(n=287), 2018–19(n=440)는 라벨 생략)',
+ax.text(0.5, -0.33, '막대 폭 ∝ 표본 수   (표본이 극히 적은 ≤2016(n=287), 2018–19(n=440)는 라벨 생략)',
         transform=ax.transAxes, ha='center', fontsize=9, color='#666')
 from matplotlib.patches import Patch
 ax.legend(handles=[Patch(color=C_MAL, label='악성'), Patch(color=C_BEN, label='정상')],
           frameon=False, ncol=2, loc='upper center', bbox_to_anchor=(0.5, 1.10))
-fig.tight_layout(); fig.savefig('fig/fig2b_dmbd_mosaic.png', dpi=200, bbox_inches='tight'); plt.close()
+fig.tight_layout(); fig.savefig('fig/fig2_dmbd_mosaic.png', dpi=200, bbox_inches='tight'); plt.close()
 print('ok')
