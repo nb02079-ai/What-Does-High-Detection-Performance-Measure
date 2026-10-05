@@ -73,7 +73,7 @@ function isWideTable(b) {
 function table(b, width, cellSize) {
   const rows = b.rows.filter(r => !/^\|[\s\-|:]+\|$/.test(r)).map(splitRow);
   const nc = Math.max(...rows.map(r => r.length));
-  const weight = [...Array(nc)].map((_, j) => Math.min(60, Math.max(5, Math.max(...rows.map(r => (r[j] || '').length)))));
+  const weight = [...Array(nc)].map((_, j) => Math.min(60, Math.max(9, Math.max(...rows.map(r => (r[j] || '').length)))));
   const tot = weight.reduce((a, c) => a + c, 0);
   let widths = weight.map(w => Math.floor(width * w / tot)); widths[nc - 1] += width - widths.reduce((a, c) => a + c, 0);
   const bd = { style: BorderStyle.SINGLE, size: 4, color: '999999' };
